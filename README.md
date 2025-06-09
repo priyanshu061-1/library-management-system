@@ -1,100 +1,56 @@
-📚 Library Management System - SQL Project
-This project demonstrates the core functionalities of a Library Management System using SQL, with real-world operations such as CRUD tasks, CTAS (Create Table As Select), and analytical queries for branch and member management.
 
-🗂️ Database Schema Overview
-The system contains the following main tables:
+📚 Library Management System – SQL Project
+This project simulates a digital library environment using SQL. It covers essential database operations, from basic CRUD tasks to advanced queries for analysis and reporting. The aim is to demonstrate how SQL can be used to manage and extract insights from library data.
 
-books
-members
-employees
-branch
-issue_status
-return_status
-📊 Entity Relationship Diagram
-Library System ER Diagram
+🧩 Database Schema Overview
+The database consists of several interconnected tables:
+
+Books – Stores details about books in the library.
+
+Members – Contains information about registered library members.
+
+Employees – Holds data about library staff.
+
+Branch – Represents different branches of the library.
+
+Issue Status – Records the issue details of books.
+
+Return Status – Tracks returned books.
+
+📊 ER Diagram
+The following diagram represents the schema structure and relationships between entities:
+
 
 🎯 Project Objectives & Tasks
 ✅ Task 1: CRUD Operations
-1. Create:
-Insert a sample book record:
+Create: Add new book records to the library database.
 
-INSERT INTO books VALUES (
-  '978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.'
-);
-2. Update:
-Update an existing member’s address:
+Read: Retrieve relevant information from tables such as issued books or member details.
 
-UPDATE members
-SET member_address = 'New Street 42, Downtown'
-WHERE member_id = 'M102';
-3. Delete:
-Delete record from issued_status:
+Update: Modify existing data, such as updating a member’s address.
 
-DELETE FROM issue_status
-WHERE issued_id = 'IS121';
-4. Read:
-Retrieve all books issued by employee 'E101':
+Delete: Remove records, for example, deleting an issue record no longer needed.
 
-SELECT * FROM issue_status
-WHERE issued_emp_id = 'E101';
-✅ Task 2: Advanced Queries
-List Members Who Have Issued More Than One Book:
+✅ Task 2: Query-Based Analysis
+Book Issues by Employee: View all books issued by a specific employee.
 
-SELECT issued_member_id, COUNT(*) AS books_issued
-FROM issue_status
-GROUP BY issued_member_id
-HAVING COUNT(*) > 1;
-✅ Task 3: CTAS (Create Table As Select)
-Create Summary Table of Issued Book Count Per Title:
+Frequent Issuers: Identify members who have issued more than one book.
 
-CREATE TABLE book_issue_summary AS
-SELECT issued_book_name, COUNT(*) AS book_issued_cnt
-FROM issue_status
-GROUP BY issued_book_name;
-✅ Task 4: Return & Overdue Tracking
-Identify Members with Overdue Books (30-day period):
+Overdue Books: Detect members who haven't returned books within a 30-day period.
 
-SELECT m.member_id, m.member_name, b.book_title, i.issued_date,
-       CURRENT_DATE - i.issued_date AS days_overdue
-FROM members m
-JOIN issue_status i ON m.member_id = i.issued_member_id
-JOIN books b ON b.isbn = i.issued_book_isbn
-WHERE CURRENT_DATE - i.issued_date > 30;
-Update Book Status to 'yes' on Return:
+Update Book Status: Change a book's status to "available" once returned.
 
-UPDATE books
-SET status = 'yes'
-WHERE isbn IN (
-  SELECT return_book_isbn FROM return_status
-);
-✅ Task 5: Reports and Analytics
-Branch Performance Report:
+✅ Task 3: CTAS and Reporting
+Summary Tables: Create new tables summarizing total books issued per title.
 
-SELECT e.branch_id,
-       COUNT(DISTINCT i.issued_id) AS books_issued,
-       COUNT(DISTINCT r.return_id) AS books_returned,
-       SUM(b.rental_price) AS total_revenue
-FROM employees e
-JOIN issue_status i ON e.emp_id = i.issued_emp_id
-JOIN books b ON b.isbn = i.issued_book_isbn
-LEFT JOIN return_status r ON i.issued_id = r.issued_id
-GROUP BY e.branch_id;
-✅ Task 6: Active Members Table (CTAS)
-Create Table of Members Issuing Books in Last 2 Months:
+Branch Report: Generate branch-wise reports showing issues, returns, and revenue.
 
-CREATE TABLE active_members AS
-SELECT DISTINCT m.*
-FROM members m
-JOIN issue_status i ON m.member_id = i.issued_member_id
-WHERE i.issued_date >= CURRENT_DATE - INTERVAL '2 months';
-🛠️ Technologies Used
-PostgreSQL / MySQL
-ER Diagram Design (dbdiagram.io / pgModeler / DBeaver)
-SQL CRUD and CTAS
-Aggregate & JOIN Queries
-📌 Author
-Priyanshu Dubey
-📧 Email: priyanshudubey061@gmail.com
-🔗 LinkedIn
-💻 GitHub
+Active Members Table: Use CTAS to build a table of members active in the last 2 months.
+
+✅ Key Learnings
+Hands-on experience with real-world SQL use cases.
+
+Practice with CTAS, subqueries, aggregate functions, and JOIN operations.
+
+Structured query development and database design.
 
