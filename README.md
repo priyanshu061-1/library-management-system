@@ -5,17 +5,17 @@ This project simulates a digital library environment using SQL. It covers essent
 🧩 Database Schema Overview
 The database consists of several interconnected tables:
 
-Books – Stores details about books in the library.
+1.Books – Stores details about books in the library.
 
-Members – Contains information about registered library members.
+2.Members – Contains information about registered library members.
 
-Employees – Holds data about library staff.
+3.Employees – Holds data about library staff.
 
-Branch – Represents different branches of the library.
+4.Branch – Represents different branches of the library.
 
-Issue Status – Records the issue details of books.
+5.Issue Status – Records the issue details of books.
 
-Return Status – Tracks returned books.
+6.Return Status – Tracks returned books.
 
 📊 ER Diagram
 The following diagram represents the schema structure and relationships between entities:
